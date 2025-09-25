@@ -1,0 +1,15 @@
+# Macro file for example B1 test
+
+/run/initialize
+
+# running ions
+/gun/particle ion
+/gun/ion 6 12 6
+
+#/gun/particle alpha
+#/gun/particle proton
+/gun/energy 3240 MeV
+
+#
+/run/printProgress 1
+/run/beamOn 1000
