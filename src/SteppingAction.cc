@@ -37,7 +37,6 @@
 #include "G4RunManager.hh"
 #include "G4LogicalVolume.hh"
 
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 MySteppingAction::MySteppingAction(MyRunAction* runAc ,EventAction* eventAction)
@@ -85,9 +84,11 @@ void MySteppingAction::UserSteppingAction(const G4Step* step)
 
   stepdist = sqrt( (xi-xi_post)*(xi-xi_post) + (yi-yi_post)*(yi-yi_post) + (zi-zi_post)*(zi-zi_post) );
 
-
   i_z_fluence = int(zdist_fluence_pre/fRunAction->stepforfluence);
   i_p_fluence = int(zdist_fluence_post/fRunAction->stepforfluence);
+
+  i_z_dEdx = int(zdist_fluence_pre/fRunAction->stepfordEdz);
+  i_p_dEdx = int(zdist_fluence_post/fRunAction->stepfordEdz);
   En = step->GetPreStepPoint()->GetKineticEnergy()/CLHEP::MeV;
 /*
   if (mytrack->GetTrackID() == 1){
@@ -99,11 +100,12 @@ void MySteppingAction::UserSteppingAction(const G4Step* step)
         if (i_p_dEdx != i_z_dEdx ) fEventAction->vEn.at(i_z_dEdx) = En;
     };
   };*/
-    
+
     if (mytrack->GetParticleDefinition()){
       if (mytrack->GetParticleDefinition()->GetAtomicNumber()==6){
           G4double stepl = step->GetStepLength();
           if (mytrack->GetTrackID()!=1){
+
        //     std::cout << "Inelastic scattering detected!!" << std::endl;
             if ((stepl>0) && (i_z_dEdx < int(fRunAction->MaxZ/fRunAction->stepfordEdz))) {
                     if (i_z_dEdx>1){
@@ -124,7 +126,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step)
           }
     }};
 
-  if (i_z_fluence != i_p_fluence){
+/*  if (i_z_fluence != i_p_fluence){
     int ismaller,ibigger;
     if (G4RunManager::GetRunManager()->GetCurrentEvent()){
       if (i_z_fluence<i_p_fluence){
@@ -166,6 +168,6 @@ void MySteppingAction::UserSteppingAction(const G4Step* step)
           fEventAction->AddEdep(edepStep,i);
       };
     };
-  };
+  };*/
 
 }
