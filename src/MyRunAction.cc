@@ -52,6 +52,13 @@ MyRunAction::MyRunAction()
   man->CreateNtupleDColumn("Distance_fr_pr_vertex");
   man->FinishNtuple(3);
 
+  man -> CreateNtuple("dEdzD","dEdzD");
+  man->CreateNtupleDColumn("Edep_MeV");
+  man->CreateNtupleDColumn("Step");
+  man->CreateNtupleDColumn("Z");
+  man->CreateNtupleDColumn("En");
+  man->CreateNtupleIColumn("Event");
+  man->FinishNtuple(4);
 }
 
 MyRunAction::~MyRunAction()

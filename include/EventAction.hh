@@ -23,8 +23,8 @@ class EventAction : public G4UserEventAction
     void AddEdep(G4double edep, G4int i) { fEdepV.at(i) += edep; };
 
     G4double xprime, yprime, zprime, distdEdx;
-    std::vector<G4double> vdEdz;
-    std::vector<G4double> vEn;
+    std::vector<G4double> vdEdz, vdEdzD;
+    std::vector<G4double> vEn, vEnD;
 
     std::vector<G4double> InitializeZVector(G4double min, G4double max, G4double step);
     std::vector<G4double> InitializeEnVector(G4double min, G4double max, G4double step);

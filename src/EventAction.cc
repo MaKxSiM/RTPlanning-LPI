@@ -61,7 +61,9 @@ void EventAction::BeginOfEventAction(const G4Event*)
   zprime = fGeneratorAction->GetParticleGun()->GetParticlePosition().z();
 
   vdEdz = InitializeZVector(fRunAction->MinZ, fRunAction->MaxZ, fRunAction->stepfordEdz);
+  vdEdzD = InitializeZVector(fRunAction->MinZ, fRunAction->MaxZ, fRunAction->stepfordEdz);
   vEn = InitializeEnVector(fRunAction->MinZ, fRunAction->MaxZ, fRunAction->stepforfluence);
+  vEnD = InitializeEnVector(fRunAction->MinZ, fRunAction->MaxZ, fRunAction->stepforfluence);
   const DetectorConstruction* detConstruction = static_cast<const DetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
   fEdepV = Initialize_EinVol_Vector(detConstruction->GetScoringVolumes().size());
 }
@@ -104,6 +106,16 @@ void EventAction::EndOfEventAction(const G4Event*)
     }
   };
 
+  for (uint i = 0; i<vdEdzD.size();i++){
+    if (vEnD.at(i)>-0.1){
+      man->FillNtupleDColumn(4,0,vdEdzD.at(i));
+      man->FillNtupleDColumn(4,1,fRunAction->stepfordEdz);
+      man->FillNtupleDColumn(4,2,i*fRunAction->stepfordEdz);
+      man->FillNtupleDColumn(4,3,vEnD.at(i));
+      man->FillNtupleIColumn(4,4,G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID());
+      man->AddNtupleRow(4);
+    }
+  }
 
 }
 

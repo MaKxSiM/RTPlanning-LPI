@@ -90,16 +90,16 @@ void MySteppingAction::UserSteppingAction(const G4Step* step)
   i_z_dEdx = int(zdist_fluence_pre/fRunAction->stepfordEdz);
   i_p_dEdx = int(zdist_fluence_post/fRunAction->stepfordEdz);
   En = step->GetPreStepPoint()->GetKineticEnergy()/CLHEP::MeV;
-/*
-  if (mytrack->GetTrackID() == 1){
+
+
     if (fEventAction->distdEdx<fRunAction->MaxZ) {
         i_z_dEdx = int(fEventAction->distdEdx/fRunAction->stepfordEdz);
-        fEventAction->vdEdz.at(i_z_dEdx) = fEventAction->vdEdz.at(i_z_dEdx) + edepStep;
+        fEventAction->vdEdzD.at(i_z_dEdx) = fEventAction->vdEdzD.at(i_z_dEdx) + edepStep;
         fEventAction->distdEdx+= stepdist;
         i_p_dEdx = int(fEventAction->distdEdx/fRunAction->stepfordEdz);
-        if (i_p_dEdx != i_z_dEdx ) fEventAction->vEn.at(i_z_dEdx) = En;
+        if (i_p_dEdx != i_z_dEdx ) fEventAction->vEnD.at(i_z_dEdx) = En;
     };
-  };*/
+
 
     if (mytrack->GetParticleDefinition()){
       if (mytrack->GetParticleDefinition()->GetAtomicNumber()==6){
@@ -125,6 +125,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step)
                   }
           }
     }};
+
 
 /*  if (i_z_fluence != i_p_fluence){
     int ismaller,ibigger;
