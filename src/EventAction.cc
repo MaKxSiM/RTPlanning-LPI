@@ -80,16 +80,16 @@ void EventAction::EndOfEventAction(const G4Event*)
   G4AnalysisManager *man = G4AnalysisManager::Instance();
   for (uint i = 0; i<vdEdz.size();i++){
     if (vEn.at(i)>-0.1){
-      man->FillNtupleDColumn(1,0,vdEdz.at(i));
-      man->FillNtupleDColumn(1,1,fRunAction->stepfordEdz);
-      man->FillNtupleDColumn(1,2,i*fRunAction->stepfordEdz);
-      man->FillNtupleDColumn(1,3,vEn.at(i));
-      man->FillNtupleIColumn(1,4,G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID());
-      man->AddNtupleRow(1);
+      man->FillNtupleDColumn(0,0,vdEdz.at(i));
+      man->FillNtupleDColumn(0,1,fRunAction->stepfordEdz);
+      man->FillNtupleDColumn(0,2,i*fRunAction->stepfordEdz);
+      man->FillNtupleDColumn(0,3,vEn.at(i));
+      man->FillNtupleIColumn(0,4,G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID());
+      man->AddNtupleRow(0);
     }
   }
   // accumulate statistics in run action
-  for (uint i=0;i<fEdepV.size();i++){
+/*  for (uint i=0;i<fEdepV.size();i++){
   // calculate mass to conver to grays
      if (fEdepV.at(i) > 0.) {
        if (detConstruction->GetScoringVolumes().at(i)->GetLogicalVolume()->GetName()== "Layer"){
@@ -104,16 +104,16 @@ void EventAction::EndOfEventAction(const G4Event*)
        man->FillNtupleDColumn(2,4,(detConstruction->sc_vol_st)*i + detConstruction->sc_vol_st/2);
        man->AddNtupleRow(2);
     }
-  };
+  };*/
 
   for (uint i = 0; i<vdEdzD.size();i++){
     if (vEnD.at(i)>-0.1){
-      man->FillNtupleDColumn(4,0,vdEdzD.at(i));
-      man->FillNtupleDColumn(4,1,fRunAction->stepfordEdz);
-      man->FillNtupleDColumn(4,2,i*fRunAction->stepfordEdz);
-      man->FillNtupleDColumn(4,3,vEnD.at(i));
-      man->FillNtupleIColumn(4,4,G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID());
-      man->AddNtupleRow(4);
+      man->FillNtupleDColumn(1,0,vdEdzD.at(i));
+      man->FillNtupleDColumn(1,1,fRunAction->stepfordEdz);
+      man->FillNtupleDColumn(1,2,i*fRunAction->stepfordEdz);
+      man->FillNtupleDColumn(1,3,vEnD.at(i));
+      man->FillNtupleIColumn(1,4,G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID());
+      man->AddNtupleRow(1);
     }
   }
 

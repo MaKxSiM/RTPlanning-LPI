@@ -22,15 +22,15 @@
     gStyle->SetLineStyleString(11,"32 18");
     double TextSizeScale = 1.0;
 
-   
-    TFile files("../build2/output.root");
+
+    TFile files("../../RTPlanning-LPI-build/output.root");
     trees = (TTree*)files.Get("dEdzD");
     trees->SetBranchAddress("Edep_MeV", &Edep_MeV);
     trees->SetBranchAddress("Z", &Z);
     //    trees[i]->SetBranchAddress("dose", &dose[i]);
-    
 
-   
+
+
     double a1 = trees->GetMaximum("Edep_MeV");
     double b = trees->GetMaximum("Z");
     double binsX = b;
@@ -44,7 +44,7 @@
             hBetheBloch->Fill(Z, Edep_MeV);
         }
 
-       
+
 
     TCanvas *y = new TCanvas("y", "y", 1020, 720);
     hBetheBloch->GetYaxis()->SetTickLength(0.02);
@@ -76,7 +76,7 @@
     legend2->SetHeader("1000 C12,E=3240 MeV","C");
     legend2->SetFillColor(kWhite);
     legend2->SetLineColor(kWhite);
-    legend2->Draw(); 
+    legend2->Draw();
  /*   for (int i=1; i<N; i++){
         pBetheBloch[i]->SetLineColor(i);
         pBetheBloch[i]->SetLineWidth(2);
@@ -85,7 +85,7 @@
         pBetheBloch[i]->SetMarkerSize(0);
         pBetheBloch[i]->Draw("same");
     }*/
-    
+
   /*  TLegend* legend = new TLegend(0.50, 0.65, 0.7, 0.80);
         legend->SetTextSize(0.036);
         legend->SetTextFont(42);

@@ -62,7 +62,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
 // Detector parameters
 
-    const G4double env_sizeXY = 30*cm, env_sizeZ = 30*cm;
+    const G4double env_sizeXY = 300*cm, env_sizeZ = 300*cm;
     const G4double sc_vol_st = 0.5*mm;
     const G4ThreeVector pos2 = G4ThreeVector(0, 0, 0.0*cm);
     G4double world_sizeXY = 1.2*env_sizeXY;

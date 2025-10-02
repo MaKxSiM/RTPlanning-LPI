@@ -13,7 +13,7 @@ MyRunAction::MyRunAction()
   man->SetNtupleMerging(true);
 // Fluences for all particles, for a given particle easy to get taking a projection on a particle type
 
-  man->CreateNtuple("Fluences", "Fluences");
+/*  man->CreateNtuple("Fluences", "Fluences");
   man->CreateNtupleIColumn("Event");
   man->CreateNtupleDColumn("X");
   man->CreateNtupleDColumn("Y");
@@ -22,7 +22,7 @@ MyRunAction::MyRunAction()
   man->CreateNtupleIColumn("particle_id");
   man->CreateNtupleSColumn("particle_name");
   man->CreateNtupleSColumn("material_name_end");
-  man->FinishNtuple(0);
+  man->FinishNtuple(0);*/
 
 // Differential energy for the primary particle (step will be an input parameter)
 
@@ -32,17 +32,17 @@ MyRunAction::MyRunAction()
   man->CreateNtupleDColumn("Z");
   man->CreateNtupleDColumn("En");
   man->CreateNtupleIColumn("Event");
-  man->FinishNtuple(1);
+  man->FinishNtuple(0);
 
-  man->CreateNtuple("Dose_in_volume_N", "Dose_in_volume_N");
+/*  man->CreateNtuple("Dose_in_volume_N", "Dose_in_volume_N");
   man->CreateNtupleDColumn("Edep_MeV");
   man->CreateNtupleIColumn("VolumeId");
   man->CreateNtupleIColumn("Event");
   man->CreateNtupleDColumn("dose");
   man->CreateNtupleDColumn("Z");
-  man->FinishNtuple(2);
+  man->FinishNtuple(2);*/
 
-  man->CreateNtuple("Produced particles", "Produced particles");
+/*  man->CreateNtuple("Produced particles", "Produced particles");
   man->CreateNtupleDColumn("En");
   man->CreateNtupleSColumn("Particle_Name");
   man->CreateNtupleIColumn("Particle_Id");
@@ -50,7 +50,7 @@ MyRunAction::MyRunAction()
   man->CreateNtupleDColumn("Y");
   man->CreateNtupleDColumn("Z");
   man->CreateNtupleDColumn("Distance_fr_pr_vertex");
-  man->FinishNtuple(3);
+  man->FinishNtuple(3);*/
 
   man -> CreateNtuple("dEdzD","dEdzD");
   man->CreateNtupleDColumn("Edep_MeV");
@@ -58,7 +58,7 @@ MyRunAction::MyRunAction()
   man->CreateNtupleDColumn("Z");
   man->CreateNtupleDColumn("En");
   man->CreateNtupleIColumn("Event");
-  man->FinishNtuple(4);
+  man->FinishNtuple(1);
 }
 
 MyRunAction::~MyRunAction()
