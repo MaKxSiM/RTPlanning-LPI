@@ -23,17 +23,17 @@
 #include "G4StepLimiterPhysics.hh"
 
 PhysicsList::PhysicsList()
-//:QBBC()
-:G4VModularPhysicsList()
+:QBBC()
+//:G4VModularPhysicsList()
 
 {
 
   G4int verb = 1;
   SetVerboseLevel(verb);
 
-  RegisterPhysics(new G4EmStandardPhysics_option3(verb));
-  RegisterPhysics(new G4IonElasticPhysics());
-  RegisterPhysics(new G4StoppingPhysics());
+//  RegisterPhysics(new G4EmStandardPhysics_option3(verb));
+//  RegisterPhysics(new G4IonElasticPhysics());
+//  RegisterPhysics(new G4StoppingPhysics());
 //  RegisterPhysics(new G4StepLimiterPhysics());
    G4StepLimiterPhysics* steplimph = new G4StepLimiterPhysics();
    steplimph->SetApplyToAll(true);

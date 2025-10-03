@@ -82,7 +82,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step)
   zdist_fluence_pre = zi - zpr ;
   zdist_fluence_post = zi_post - zpr ;
 
-  stepdist = sqrt( (xi-xi_post)*(xi-xi_post) + (yi-yi_post)*(yi-yi_post) + (zi-zi_post)*(zi-zi_post) );
+  stepdist = sqrt((zi-zi_post)*(zi-zi_post) );
 
   i_z_fluence = int(zdist_fluence_pre/fRunAction->stepforfluence);
   i_p_fluence = int(zdist_fluence_post/fRunAction->stepforfluence);

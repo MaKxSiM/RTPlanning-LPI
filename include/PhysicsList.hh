@@ -6,7 +6,7 @@
 #include "QBBC.hh"
 
 
-class PhysicsList:public G4VModularPhysicsList //public QBBC//
+class PhysicsList:public QBBC// public G4VModularPhysicsList //
 {
 
 public:
