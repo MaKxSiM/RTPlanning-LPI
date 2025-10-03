@@ -63,7 +63,7 @@ void EventAction::BeginOfEventAction(const G4Event*)
   vdEdz = InitializeZVector(fRunAction->MinZ, fRunAction->MaxZ, fRunAction->stepfordEdz);
   vdEdzD = InitializeZVector(fRunAction->MinZ, fRunAction->MaxZ, fRunAction->stepfordEdz);
   vEn = InitializeEnVector(fRunAction->MinZ, fRunAction->MaxZ, fRunAction->stepforfluence);
-  vEnD = InitializeEnVector(fRunAction->MinZ, fRunAction->MaxZ, fRunAction->stepforfluence);
+//  vEnD = InitializeEnVector(fRunAction->MinZ, fRunAction->MaxZ, fRunAction->stepforfluence);
   const DetectorConstruction* detConstruction = static_cast<const DetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
   fEdepV = Initialize_EinVol_Vector(detConstruction->GetScoringVolumes().size());
 }
@@ -107,14 +107,11 @@ void EventAction::EndOfEventAction(const G4Event*)
   };*/
 
   for (uint i = 0; i<vdEdzD.size();i++){
-    if (vEnD.at(i)>-0.1){
       man->FillNtupleDColumn(1,0,vdEdzD.at(i));
       man->FillNtupleDColumn(1,1,fRunAction->stepfordEdz);
       man->FillNtupleDColumn(1,2,i*fRunAction->stepfordEdz);
-      man->FillNtupleDColumn(1,3,vEnD.at(i));
-      man->FillNtupleIColumn(1,4,G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID());
+      man->FillNtupleIColumn(1,3,G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID());
       man->AddNtupleRow(1);
-    }
   }
 
 }

@@ -61,7 +61,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step)
   G4double edepStep = step->GetTotalEnergyDeposit();
   G4Track* mytrack = step -> GetTrack ();
   G4double xi, yi, zi, xi_post, yi_post, zi_post, En, stepdist, xpr, ypr, zpr , zdist_fluence_pre, zdist_fluence_post;
-  G4int i_z_dEdx,i_p_dEdx;
+  G4int i_z_dEdx,i_p_dEdx, i_z_dEdxD;
   G4int i_z_fluence,i_p_fluence;
 
   G4AnalysisManager *man = G4AnalysisManager::Instance();
@@ -82,52 +82,50 @@ void MySteppingAction::UserSteppingAction(const G4Step* step)
   zdist_fluence_pre = zi - zpr ;
   zdist_fluence_post = zi_post - zpr ;
 
-  stepdist = sqrt((zi-zi_post)*(zi-zi_post) );
+  stepdist = zi_post-zi;
 
   i_z_fluence = int(zdist_fluence_pre/fRunAction->stepforfluence);
   i_p_fluence = int(zdist_fluence_post/fRunAction->stepforfluence);
 
-  i_z_dEdx = int(zdist_fluence_pre/fRunAction->stepfordEdz);
-  i_p_dEdx = int(zdist_fluence_post/fRunAction->stepfordEdz);
+  i_z_dEdxD = int(zdist_fluence_pre/fRunAction->stepfordEdz);
+//  i_p_dEdx = int(zdist_fluence_post/fRunAction->stepfordEdz);
   En = step->GetPreStepPoint()->GetKineticEnergy()/CLHEP::MeV;
 
 
-    if (fEventAction->distdEdx<fRunAction->MaxZ) {
-        i_z_dEdx = int(fEventAction->distdEdx/fRunAction->stepfordEdz);
-        fEventAction->vdEdzD.at(i_z_dEdx) = fEventAction->vdEdzD.at(i_z_dEdx) + edepStep;
-        fEventAction->distdEdx+= stepdist;
-        i_p_dEdx = int(fEventAction->distdEdx/fRunAction->stepfordEdz);
-        if (i_p_dEdx != i_z_dEdx ) fEventAction->vEnD.at(i_z_dEdx) = En;
-    };
+  if (zdist_fluence_pre<fRunAction->MaxZ) {
+      if (i_z_dEdxD>=0){
+        fEventAction->vdEdzD.at(i_z_dEdxD) = fEventAction->vdEdzD.at(i_z_dEdxD) + edepStep;
+      }
+  };
 
-
-    if (mytrack->GetParticleDefinition()){
+  if (mytrack->GetParticleDefinition()){
       if (mytrack->GetParticleDefinition()->GetAtomicNumber()==6){
           G4double stepl = step->GetStepLength();
-          if (mytrack->GetTrackID()!=1){
-
-       //     std::cout << "Inelastic scattering detected!!" << std::endl;
-            if ((stepl>0) && (i_z_dEdx < int(fRunAction->MaxZ/fRunAction->stepfordEdz))) {
-                    if (i_z_dEdx>1){
-                      fEventAction->vdEdz.at(i_z_dEdx) = fEventAction->vEn.at(i_z_dEdx-1)-En;
-                    } else {
+          if (i_z_dEdx>=0) {
+              if (mytrack->GetTrackID()!=1){
+           //     std::cout << "Inelastic scattering detected!!" << std::endl;
+                if ((stepl>0) && (i_z_dEdx < int(fRunAction->MaxZ/fRunAction->stepfordEdz))) {
+                        if (i_z_dEdx>1){
+                          fEventAction->vdEdz.at(i_z_dEdx) = fEventAction->vEn.at(i_z_dEdx-1)-En;
+                        } else {
+                          fEventAction->vdEdz.at(i_z_dEdx) += edepStep;
+                        }
+                        if (i_p_dEdx != i_z_dEdx) {
+                            fEventAction->vEn.at(i_z_dEdx) = En;
+                        }
+                };
+              };
+              if ((stepl>0) && (i_z_dEdx < int(fRunAction->MaxZ/fRunAction->stepfordEdz))) {
                       fEventAction->vdEdz.at(i_z_dEdx) += edepStep;
-                    }
-                    if (i_p_dEdx != i_z_dEdx) {
-                        fEventAction->vEn.at(i_z_dEdx) = En;
-                    }
-            };
-          };
-          if ((stepl>0) && (i_z_dEdx < int(fRunAction->MaxZ/fRunAction->stepfordEdz))) {
-                  fEventAction->vdEdz.at(i_z_dEdx) += edepStep;
-                  if (i_p_dEdx != i_z_dEdx) {
-                      fEventAction->vEn.at(i_z_dEdx) = En;
-                  }
-          }
+                      if (i_p_dEdx != i_z_dEdx) {
+                          fEventAction->vEn.at(i_z_dEdx) = En;
+                      }
+              }
+      }
     }};
 
-
-/*  if (i_z_fluence != i_p_fluence){
+/*
+  if (i_z_fluence != i_p_fluence){
     int ismaller,ibigger;
     if (G4RunManager::GetRunManager()->GetCurrentEvent()){
       if (i_z_fluence<i_p_fluence){

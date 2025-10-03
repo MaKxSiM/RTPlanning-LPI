@@ -56,7 +56,7 @@ MyRunAction::MyRunAction()
   man->CreateNtupleDColumn("Edep_MeV");
   man->CreateNtupleDColumn("Step");
   man->CreateNtupleDColumn("Z");
-  man->CreateNtupleDColumn("En");
+//  man->CreateNtupleDColumn("En");
   man->CreateNtupleIColumn("Event");
   man->FinishNtuple(1);
 }
