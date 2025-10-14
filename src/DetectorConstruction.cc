@@ -107,7 +107,23 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                     checkOverlaps);          //overlaps checking
 
 
+G4Box* solidFe =
+    new G4Box("Fe",                    //its name
+        0.5*Fe_sizeXY, 0.5*Fe_sizeXY, 0.5*Fe_sizeZ); //its size
 
+  logicFe =
+    new G4LogicalVolume(solidFe,            //its solid
+                        Fe_mat,             //its material
+                        "Fe_log");         //its name
+
+  physFe = new G4PVPlacement(0,                       //no rotation
+                    G4ThreeVector(0,0,-0.5*env_sizeZ-0.5*Fe_sizeZ-gap),         //at (0,0,0)
+                    logicFe,                //its logical volume
+                    "Fe_phys",              //its name
+                    logicWorld,              //its mother  volume
+                    false,                   //no boolean operation
+                    0,                       //copy number
+                    checkOverlaps);          //overlaps checking
 
 
 

@@ -66,19 +66,19 @@ MyRunAction::~MyRunAction()
 
 void MyRunAction::BeginOfRunAction(const G4Run*)
 {
-/*
+
     G4AnalysisManager *man = G4AnalysisManager::Instance();
     //man->OpenFile("output.root");
     man->OpenFile(fileName);
-*/
+
     // set printing event number per each event
 }
 
 
 void MyRunAction::EndOfRunAction(const G4Run*)
 {
-/*    G4AnalysisManager *man = G4AnalysisManager::Instance();
+    G4AnalysisManager *man = G4AnalysisManager::Instance();
 
     man->Write();
-    man->CloseFile();*/
+    man->CloseFile();
 }

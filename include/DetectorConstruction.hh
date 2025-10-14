@@ -62,15 +62,18 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
 // Detector parameters
 
-    const G4double env_sizeXY = 300*cm, env_sizeZ = 300*cm;
+    const G4double env_sizeXY = 100*cm, env_sizeZ = 100*cm;
     const G4double sc_vol_st = 0.5*mm;
     const G4ThreeVector pos2 = G4ThreeVector(0, 0, 0.0*cm);
-    G4double world_sizeXY = 1.2*env_sizeXY;
-    G4double world_sizeZ  = 1.2*env_sizeZ;
+    const G4double Fe_sizeXY = 100*cm, Fe_sizeZ = 0.3*cm;
+    const G4double gap = 1*m;
+    G4double world_sizeXY = 1.2*(env_sizeXY+Fe_sizeXY);
+    G4double world_sizeZ  = 1.2*(env_sizeZ+Fe_sizeZ+gap);
 
 //========platic A-150-tissue  with incorporated Bi particles =======================
     const G4String env_mat_name = "G4_WATER";
     const G4String world_mat_name = "G4_AIR";
+    const G4String Fe_mat_name="G4_Fe";
     //const G4String Admixture_name = "G4_Bi";
     //const G4String Tissue_name = "G4_A-150_TISSUE";
     //  const G4String Tissue_name = "soft_tissue"; //soft tissues from G4HumanPhantomMaterial
@@ -99,8 +102,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
     G4Material* env_mat;
     G4Material* world_mat;
-    G4LogicalVolume* logicEnv,*logicWorld,*logicShape2,*logictempl,*logictemp_pl_plate;
-    G4VPhysicalVolume* physEnv;
+     G4Material* Fe_mat;
+    G4LogicalVolume* logicEnv,*logicWorld,*logicShape2,*logictempl,*logictemp_pl_plate,*logicFe;
+    G4VPhysicalVolume* physEnv,*physFe;
     G4bool checkOverlaps = true;
 
   private:

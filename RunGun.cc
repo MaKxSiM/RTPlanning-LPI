@@ -17,7 +17,23 @@
 #include "G4RadioactiveDecayPhysics.hh"
 
 #include "Randomize.hh"
-
+static std::vector<std::string> splitString(std::string str, char splitter){
+        std::vector<std::string> result;
+        std::string current = "";
+        for(int i = 0; i < str.size(); i++){
+            if(str[i] == splitter){
+                if(current != ""){
+                    result.push_back(current);
+                    current = "";
+                }
+                continue;
+            }
+            current += str[i];
+        }
+        if(current.size() != 0)
+            result.push_back(current);
+        return result;
+ }
 
 
 int main(int argc,char** argv)
@@ -38,7 +54,7 @@ int main(int argc,char** argv)
   
   // Optionally: choose a different Random engine...
   // G4Random::setTheEngine(new CLHEP::MTwistEngine);
-while ( true )
+/*while ( true )
 {
   int option_index = 0, c;
   static struct option long_options[] =
@@ -47,7 +63,7 @@ while ( true )
    { 0, 0, 0, 0 }   
   };
 
- c = getopt_long(argc, argv, "o", long_options, &option_index);
+ c = getopt_long(argc, argv, "o:", long_options, &option_index);
  if (c == -1) break;
 
  switch (c)
@@ -57,8 +73,8 @@ while ( true )
  output_tree_file=optarg;
  break; 
 }
-}
-/*  //use G4SteppingVerboseWithUnits
+}*/
+  //use G4SteppingVerboseWithUnits
   G4int precision = 4;
   G4SteppingVerbose::UseBestUnit(precision);
 
@@ -76,6 +92,7 @@ while ( true )
  runManager->SetUserInitialization(phys);
 
   // User action initialization
+  if (argc>2) { output_tree_file=argv[2];}
   runManager->SetUserInitialization(new MyActionInitialization(output_tree_file));
 
   // Initialize visualization
@@ -86,12 +103,17 @@ while ( true )
 
   // Get the pointer to the User Interface manager
   G4UImanager* UImanager = G4UImanager::GetUIpointer();
-
+  for (int i=0;i<argc;i++){
+  std::cout<<argv[i]<<std::endl;
+  } 
   // Process macro or start UI session
   if ( ! ui ) {
     // batch mode
     G4String command = "/control/execute ";
+   // std::string str(argv[1]); 
+   // G4String fileName = splitString(str,' ')[0];
     G4String fileName = argv[1];
+    std::cout<<fileName<<std::endl;
     UImanager->ApplyCommand(command+fileName);
   }
   else {
@@ -107,7 +129,7 @@ while ( true )
   // in the main() program !
 
   delete visManager;
-  delete runManager;*/
+  delete runManager;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
