@@ -39,11 +39,13 @@
 class MyActionInitialization : public G4VUserActionInitialization
 {
   public:
-    MyActionInitialization();
+    MyActionInitialization(G4String);
     ~MyActionInitialization() override;
 
     void BuildForMaster() const override;
     void Build() const override;
+  private:
+   G4String output_tree_file; 
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

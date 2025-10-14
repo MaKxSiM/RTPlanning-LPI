@@ -37,8 +37,10 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-MyActionInitialization::MyActionInitialization()
-{}
+MyActionInitialization::MyActionInitialization(G4String output_file)
+{
+output_tree_file= output_file;
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -49,7 +51,7 @@ MyActionInitialization::~MyActionInitialization()
 
 void MyActionInitialization::BuildForMaster() const
 {
-   MyRunAction* runAction = new MyRunAction();
+   MyRunAction* runAction = new MyRunAction(output_tree_file);
    SetUserAction(runAction);
 }
 
@@ -60,9 +62,10 @@ void MyActionInitialization::Build() const
   PrimaryGeneratorAction* generatorAction = new PrimaryGeneratorAction;
   SetUserAction(generatorAction);
 
-  MyRunAction* runAction = new MyRunAction();
+ 
+  MyRunAction* runAction = new MyRunAction(output_tree_file);
   SetUserAction(runAction);
-
+  
   EventAction* eventAction = new EventAction(runAction,generatorAction);
   SetUserAction(eventAction);
 
@@ -70,4 +73,6 @@ void MyActionInitialization::Build() const
   SetUserAction(trackingAction);
 
   SetUserAction(new MySteppingAction(runAction,eventAction));
-}
+  
+  
+  }

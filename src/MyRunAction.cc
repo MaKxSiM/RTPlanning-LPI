@@ -3,12 +3,12 @@
 #include "G4PrimaryVertex.hh"
 #include "G4AccumulableManager.hh"
 
-MyRunAction::MyRunAction()
+MyRunAction::MyRunAction(G4String file)
 {
   auto man = G4AnalysisManager::Instance();
 
   G4RunManager::GetRunManager()->SetPrintProgress(0);
-
+  fileName= file;
   man->SetVerboseLevel(0);
   man->SetNtupleMerging(true);
 // Fluences for all particles, for a given particle easy to get taking a projection on a particle type
@@ -66,19 +66,19 @@ MyRunAction::~MyRunAction()
 
 void MyRunAction::BeginOfRunAction(const G4Run*)
 {
-
+/*
     G4AnalysisManager *man = G4AnalysisManager::Instance();
-    man->OpenFile("output.root");
-
-
+    //man->OpenFile("output.root");
+    man->OpenFile(fileName);
+*/
     // set printing event number per each event
 }
 
 
 void MyRunAction::EndOfRunAction(const G4Run*)
 {
-    G4AnalysisManager *man = G4AnalysisManager::Instance();
+/*    G4AnalysisManager *man = G4AnalysisManager::Instance();
 
     man->Write();
-    man->CloseFile();
+    man->CloseFile();*/
 }

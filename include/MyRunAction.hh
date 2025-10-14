@@ -12,7 +12,7 @@
 class MyRunAction : public G4UserRunAction
 {
 public:
-    MyRunAction();
+    MyRunAction(G4String);
     ~MyRunAction();
 
     virtual void BeginOfRunAction(const G4Run*);
@@ -23,7 +23,8 @@ public:
 
     const G4double stepfordEdz = 1.* CLHEP::mm;
     const G4double stepforfluence = 1.* CLHEP::mm;
-
+private:
+    G4String fileName;
 };
 
 #endif

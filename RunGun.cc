@@ -1,3 +1,6 @@
+#include <getopt.h>
+#include "globals.hh"
+
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
 #include "MyRunAction.hh"
@@ -22,7 +25,8 @@ int main(int argc,char** argv)
 
   // Detect interactive mode (if no arguments) and define UI session
   //
-
+  G4bool tree_output = false;
+  G4String output_tree_file= "output.root";
   G4UIExecutive* ui = nullptr;
  if ( argc == 1 ) { ui = new G4UIExecutive(argc, argv); }
  
@@ -34,8 +38,27 @@ int main(int argc,char** argv)
   
   // Optionally: choose a different Random engine...
   // G4Random::setTheEngine(new CLHEP::MTwistEngine);
+while ( true )
+{
+  int option_index = 0, c;
+  static struct option long_options[] =
+  {
+   {"outputtree",1, 0, 'o'},
+   { 0, 0, 0, 0 }   
+  };
 
-  //use G4SteppingVerboseWithUnits
+ c = getopt_long(argc, argv, "o", long_options, &option_index);
+ if (c == -1) break;
+
+ switch (c)
+{
+ case 'o':
+ tree_output = true;
+ output_tree_file=optarg;
+ break; 
+}
+}
+/*  //use G4SteppingVerboseWithUnits
   G4int precision = 4;
   G4SteppingVerbose::UseBestUnit(precision);
 
@@ -53,7 +76,7 @@ int main(int argc,char** argv)
  runManager->SetUserInitialization(phys);
 
   // User action initialization
-  runManager->SetUserInitialization(new MyActionInitialization());
+  runManager->SetUserInitialization(new MyActionInitialization(output_tree_file));
 
   // Initialize visualization
   G4VisManager* visManager = new G4VisExecutive;
@@ -84,7 +107,7 @@ int main(int argc,char** argv)
   // in the main() program !
 
   delete visManager;
-  delete runManager;
+  delete runManager;*/
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
