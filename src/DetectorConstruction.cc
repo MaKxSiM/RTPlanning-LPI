@@ -59,7 +59,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Envelope parameters
   //
   env_mat = nist->FindOrBuildMaterial(env_mat_name);
-
+  Fe_mat = nist ->FindOrBuildMaterial(Fe_mat_name);
   // Option to switch on/off checking of volumes overlaps
   //
 

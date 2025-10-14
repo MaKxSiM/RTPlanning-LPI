@@ -65,10 +65,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     const G4double env_sizeXY = 100*cm, env_sizeZ = 100*cm;
     const G4double sc_vol_st = 0.5*mm;
     const G4ThreeVector pos2 = G4ThreeVector(0, 0, 0.0*cm);
-    const G4double Fe_sizeXY = 100*cm, Fe_sizeZ = 0.3*cm;
+    const G4double Fe_sizeXY = 100*cm, Fe_sizeZ = 3*cm;
     const G4double gap = 1*m;
     G4double world_sizeXY = 1.2*(env_sizeXY+Fe_sizeXY);
-    G4double world_sizeZ  = 1.2*(env_sizeZ+Fe_sizeZ+gap);
+    G4double world_sizeZ  = 1.2*(env_sizeZ+Fe_sizeZ+2*gap);
 
 //========platic A-150-tissue  with incorporated Bi particles =======================
     const G4String env_mat_name = "G4_WATER";
